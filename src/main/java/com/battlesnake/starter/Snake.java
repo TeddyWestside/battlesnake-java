@@ -161,6 +161,7 @@ public class Snake {
 
             JsonNode head = moveRequest.get("you").get("head");
             JsonNode body = moveRequest.get("you").get("body");
+            JsonNode board = moveRequest.get("board");
 
             ArrayList<String> possibleMoves = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
 
@@ -170,6 +171,7 @@ public class Snake {
             // TODO: Using information from 'moveRequest', find the edges of the board and
             // don't
             // let your Battlesnake move beyond them board_height = ? board_width = ?
+            this.avoidColisionWithBorders(head, body, board, possibleMoves);
 
             // TODO Using information from 'moveRequest', don't let your Battlesnake pick a
             // move
@@ -230,6 +232,16 @@ public class Snake {
         public Map<String, String> end(JsonNode endRequest) {
             LOG.info("END");
             return EMPTY;
+        }
+
+        public void avoidColisionWithBorders(JsonNode head, JsonNode body, JsonNode board, ArrayList<String> possibleMoves){
+            int height = board.get("height").asInt();
+            int width = board.get("width").asInt();
+
+            if (head.get("x").asInt() + 1 == width) possibleMoves.remove("right");
+            if (head.get("x").asInt() - 1 == 0) possibleMoves.remove("left");
+            if (head.get("y").asInt() + 1 == height) possibleMoves.remove("up");
+            if (head.get("y").asInt() - 1 == 0) possibleMoves.remove("down");
         }
     }
 
