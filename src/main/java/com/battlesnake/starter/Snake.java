@@ -68,8 +68,7 @@ public class Snake {
                 GameState obj = mapper.readValue(parsedRequest.asText(), GameState.class);
                 String uri = req.uri();
                 LOG.info("TurnId is the following" + obj.turn);
-                LOG.info("{} called with: {}", uri, req.body());
-                LOG.info("{} called with: {}", uri, req.body());
+//                LOG.info("{} called with: {}", uri, req.body());
                 Map<String, String> snakeResponse;
                 if (uri.equals("/")) {
                     snakeResponse = index();
@@ -83,7 +82,7 @@ public class Snake {
                     throw new IllegalAccessError("Strange call made to the snake: " + uri);
                 }
 
-                LOG.info("Responding with: {}", JSON_MAPPER.writeValueAsString(snakeResponse));
+//                LOG.info("Responding with: {}", JSON_MAPPER.writeValueAsString(snakeResponse));
 
                 return snakeResponse;
             } catch (JsonProcessingException e) {
@@ -143,11 +142,11 @@ public class Snake {
          */
         public Map<String, String> move(JsonNode moveRequest) {
 
-            try {
-                LOG.info("Data: {}", JSON_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(moveRequest));
-            } catch (JsonProcessingException e) {
-                LOG.error("Error parsing payload", e);
-            }
+//            try {
+//                LOG.info("Data: {}", JSON_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(moveRequest));
+//            } catch (JsonProcessingException e) {
+//                LOG.error("Error parsing payload", e);
+//            }
 
             /*
              * Example how to retrieve data from the request payload:
