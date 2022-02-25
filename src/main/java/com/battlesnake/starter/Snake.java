@@ -1,5 +1,6 @@
 package com.battlesnake.starter;
 
+import com.battlesnake.starter.Structure.GameState;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,15 +9,9 @@ import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
-import static spark.Spark.port;
-import static spark.Spark.post;
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 /**
  * This is a simple Battlesnake server written in Java.
@@ -69,7 +64,11 @@ public class Snake {
         public Map<String, String> process(Request req, Response res) {
             try {
                 JsonNode parsedRequest = JSON_MAPPER.readTree(req.body());
+                ObjectMapper mapper = new ObjectMapper();
+                GameState obj = mapper.readValue(parsedRequest.asText(), GameState.class);
                 String uri = req.uri();
+                LOG.info("TurnId is the following" + obj.turn);
+                LOG.info("{} called with: {}", uri, req.body());
                 LOG.info("{} called with: {}", uri, req.body());
                 Map<String, String> snakeResponse;
                 if (uri.equals("/")) {
@@ -176,6 +175,7 @@ public class Snake {
             // TODO Using information from 'moveRequest', don't let your Battlesnake pick a
             // move
             // that would hit its own body
+            this.avoidColisionWithSelf(head, body, board, possibleMoves);
 
             // TODO: Using information from 'moveRequest', don't let your Battlesnake pick a
             // move
@@ -194,6 +194,10 @@ public class Snake {
             Map<String, String> response = new HashMap<>();
             response.put("move", move);
             return response;
+        }
+
+        private void avoidColisionWithSelf(JsonNode head, JsonNode body, JsonNode board, ArrayList<String> possibleMoves) {
+            ArrayList bodies = new ObjectMapper().convertValue(body, ArrayList.class);
         }
 
         /**
@@ -244,5 +248,4 @@ public class Snake {
             if (head.get("y").asInt() - 1 == 0) possibleMoves.remove("down");
         }
     }
-
 }
