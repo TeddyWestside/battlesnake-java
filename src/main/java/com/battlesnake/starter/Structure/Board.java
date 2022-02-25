@@ -1,8 +1,9 @@
 package com.battlesnake.starter.Structure;
 
-public record Board(int height,
-                    int width,
-                    Coord[] food,
-                    Battlesnake[] snakes,
-                    Coord[] hazards) {
+public class Board {
+    int height;
+    public int width;
+    public Coord[] food;
+    public Battlesnake[] snakes;
+    public Coord[] hazards;
 }
