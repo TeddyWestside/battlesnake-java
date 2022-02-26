@@ -143,11 +143,11 @@ public class Snake {
         }
 
         private void avoidColisionWithSelf(JsonNode head, JsonNode body, JsonNode board, ArrayList<String> possibleMoves) {
-            var bodies = new ObjectMapper().convertValue(body, ArrayList.class);
+            ArrayList bodies = new ObjectMapper().convertValue(body, ArrayList.class);
         }
 
         public void avoidMyNeck(Coord head, Coord[] body, ArrayList<String> possibleMoves) {
-            var neck = body[1];
+            Coord neck = body[1];
 
             if (neck.x < head.x) possibleMoves.remove("left");
             else if (neck.x > head.x) possibleMoves.remove("right");
@@ -161,8 +161,8 @@ public class Snake {
         }
 
         public void avoidColisionWithBorders(Battlesnake you, Board board, ArrayList<String> possibleMoves){
-            var head = you.head;
-            var body = you.body;
+            Coord head = you.head;
+            Coord[] body = you.body;
 
             int height = board.height;
             int width = board.width;
