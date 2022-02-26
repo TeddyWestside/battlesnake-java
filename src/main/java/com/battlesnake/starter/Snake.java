@@ -4,6 +4,7 @@ import com.battlesnake.starter.Structure.Battlesnake;
 import com.battlesnake.starter.Structure.Board;
 import com.battlesnake.starter.Structure.Coord;
 import com.battlesnake.starter.Structure.GameState;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,7 +47,8 @@ public class Snake {
             try {
                 JsonNode parsedRequest = JSON_MAPPER.readTree(req.body());
                 ObjectMapper mapper = new ObjectMapper();
-                GameState gameState = mapper.readValue(parsedRequest.asText(), GameState.class);
+                mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
+                GameState gameState = mapper.readValue(req.body(), GameState.class);
                 String uri = req.uri();
 //                LOG.info("{} called with: {}", uri, req.body());
                 Map<String, String> snakeResponse;
