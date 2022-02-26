@@ -162,15 +162,14 @@ public class Snake {
 
         public void avoidColisionWithBorders(Battlesnake you, Board board, ArrayList<String> possibleMoves){
             Coord head = you.head;
-            Coord[] body = you.body;
 
             int height = board.height;
             int width = board.width;
 
-            if (head.x + 1 == width) possibleMoves.remove("right");
-            if (head.x - 1 == 0) possibleMoves.remove("left");
-            if (head.y + 1 == height) possibleMoves.remove("up");
-            if (head.y - 1 == 0) possibleMoves.remove("down");
+            if (head.x == width - 1) possibleMoves.remove("right");
+            if (head.x == 0) possibleMoves.remove("left");
+            if (head.y == height - 1) possibleMoves.remove("up");
+            if (head.y == 0) possibleMoves.remove("down");
         }
     }
 }
