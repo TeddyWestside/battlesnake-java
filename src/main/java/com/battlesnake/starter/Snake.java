@@ -49,7 +49,11 @@ public class Snake {
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
                 GameState gameState = new GameState();
-                if (req.body() != null) gameState = mapper.readValue(req.body(), GameState.class);
+                try {
+                    if (req.body() != null) gameState = mapper.readValue(req.body(), GameState.class);
+                } catch (Exception e){
+
+                }
 
                 String uri = req.uri();
 //                LOG.info("{} called with: {}", uri, req.body());
