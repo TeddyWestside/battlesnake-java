@@ -116,7 +116,7 @@ public class Snake {
             // TODO: Using information from 'moveRequest', find the edges of the board and
             // don't
             // let your Battlesnake move beyond them board_height = ? board_width = ?
-            this.avoidColisionWithBorders(gameState.you,  gameState.board, possibleMoves);
+            possibleMoves = this.avoidColisionWithBorders(gameState.you,  gameState.board, possibleMoves);
 
             // TODO Using information from 'moveRequest', don't let your Battlesnake pick a
             // move
@@ -161,9 +161,8 @@ public class Snake {
             return EMPTY;
         }
 
-        public void avoidColisionWithBorders(Battlesnake you, Board board, ArrayList<String> possibleMoves){
+        public ArrayList<String> avoidColisionWithBorders(Battlesnake you, Board board, ArrayList<String> possibleMoves){
             Coord head = you.head;
-
             int height = board.height;
             int width = board.width;
 
@@ -171,6 +170,8 @@ public class Snake {
             if (head.x == 0) possibleMoves.remove("left");
             if (head.y == height - 1) possibleMoves.remove("up");
             if (head.y == 0) possibleMoves.remove("down");
+
+            return possibleMoves;
         }
     }
 }
