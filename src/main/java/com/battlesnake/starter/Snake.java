@@ -4,6 +4,7 @@ import com.battlesnake.starter.Structure.Battlesnake;
 import com.battlesnake.starter.Structure.Board;
 import com.battlesnake.starter.Structure.Coord;
 import com.battlesnake.starter.Structure.GameState;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -103,6 +104,7 @@ public class Snake {
 
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
+            mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             GameState gameState = mapper.readValue(moveReqest.asText(), GameState.class);
 
 //            try {
