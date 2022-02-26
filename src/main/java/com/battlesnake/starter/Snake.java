@@ -48,7 +48,12 @@ public class Snake {
                 JsonNode parsedRequest = JSON_MAPPER.readTree(req.body());
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
-                GameState gameState = mapper.readValue(req.body(), GameState.class);
+                GameState gameState = new GameState();
+                try {
+                    if (req.body() != null) gameState = mapper.readValue(req.body(), GameState.class);
+                } catch (Exception e){
+
+                }
                 String uri = req.uri();
 //                LOG.info("{} called with: {}", uri, req.body());
                 Map<String, String> snakeResponse;
