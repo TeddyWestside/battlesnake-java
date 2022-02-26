@@ -110,7 +110,7 @@ public class Snake {
                 mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
                 gameState = mapper.readValue(moveRequest.asText(), GameState.class);
             } catch (JsonProcessingException e) {
-                LOG.info("Data: {}", JSON_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(moveRequest));
+                LOG.info("Data: {}", moveRequest.asText());
                 throw e;
             }
 
