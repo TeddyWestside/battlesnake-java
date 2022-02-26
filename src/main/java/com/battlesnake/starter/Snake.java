@@ -46,15 +46,6 @@ public class Snake {
         public Map<String, String> process(Request req, Response res) {
             try {
                 JsonNode parsedRequest = JSON_MAPPER.readTree(req.body());
-                ObjectMapper mapper = new ObjectMapper();
-                mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
-                GameState gameState = new GameState();
-                try {
-                    if (req.body() != null) gameState = mapper.readValue(req.body(), GameState.class);
-                } catch (Exception e){
-
-                }
-
                 String uri = req.uri();
 //                LOG.info("{} called with: {}", uri, req.body());
                 Map<String, String> snakeResponse;
@@ -66,7 +57,7 @@ public class Snake {
                         snakeResponse = start(parsedRequest);
                         break;
                     case "/move":
-                        snakeResponse = move(gameState);
+                        snakeResponse = move(parsedRequest);
                         break;
                     case "/end":
                         snakeResponse = end(parsedRequest);
@@ -108,7 +99,11 @@ public class Snake {
             return EMPTY;
         }
 
-        public Map<String, String> move(GameState gameState) {
+        public Map<String, String> move(JsonNode moveReqest) throws JsonProcessingException {
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
+            GameState gameState = mapper.readValue(moveReqest.asText(), GameState.class);
 
 //            try {
 //                LOG.info("Data: {}", JSON_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(moveRequest));
