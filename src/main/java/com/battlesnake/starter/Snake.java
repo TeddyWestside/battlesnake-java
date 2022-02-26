@@ -100,18 +100,19 @@ public class Snake {
             return EMPTY;
         }
 
-        public Map<String, String> move(JsonNode moveReqest) throws JsonProcessingException {
+        public Map<String, String> move(JsonNode moveRequest) throws JsonProcessingException {
 
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
-            mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-            GameState gameState = mapper.readValue(moveReqest.asText(), GameState.class);
 
-//            try {
-//                LOG.info("Data: {}", JSON_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(moveRequest));
-//            } catch (JsonProcessingException e) {
-//                LOG.error("Error parsing payload", e);
-//            }
+            GameState gameState = new GameState();
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
+                mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+                gameState = mapper.readValue(moveRequest.asText(), GameState.class);
+            } catch (JsonProcessingException e) {
+                LOG.info("Data: {}", JSON_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(moveRequest));
+                throw e;
+            }
 
             ArrayList<String> possibleMoves = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
 
