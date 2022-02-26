@@ -111,12 +111,12 @@ public class Snake {
             ArrayList<String> possibleMoves = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
 
             // Don't allow your Battlesnake to move back in on it's own neck
-            possibleMoves = avoidMyNeck(gameState.you.head, gameState.you.body, possibleMoves);
+            avoidMyNeck(gameState.you.head, gameState.you.body, possibleMoves);
 
             // TODO: Using information from 'moveRequest', find the edges of the board and
             // don't
             // let your Battlesnake move beyond them board_height = ? board_width = ?
-            possibleMoves = this.avoidColisionWithBorders(gameState.you,  gameState.board, possibleMoves);
+            avoidColisionWithBorders(gameState.you, gameState.board, possibleMoves);
 
             // TODO Using information from 'moveRequest', don't let your Battlesnake pick a
             // move
@@ -146,14 +146,13 @@ public class Snake {
             ArrayList bodies = new ObjectMapper().convertValue(body, ArrayList.class);
         }
 
-        public ArrayList<String> avoidMyNeck(Coord head, Coord[] body, ArrayList<String> possibleMoves) {
+        public void avoidMyNeck(Coord head, Coord[] body, ArrayList<String> possibleMoves) {
             Coord neck = body[1];
 
             if (neck.x < head.x) possibleMoves.remove("left");
             else if (neck.x > head.x) possibleMoves.remove("right");
             else if (neck.y < head.y) possibleMoves.remove("down");
             else if (neck.y > head.y) possibleMoves.remove("up");
-            return possibleMoves;
         }
 
         public Map<String, String> end(JsonNode endRequest) {
@@ -161,17 +160,13 @@ public class Snake {
             return EMPTY;
         }
 
-        public ArrayList<String> avoidColisionWithBorders(Battlesnake you, Board board, ArrayList<String> possibleMoves){
+        public void avoidColisionWithBorders(Battlesnake you, Board board, ArrayList<String> possibleMoves){
             Coord head = you.head;
-            int height = board.height;
-            int width = board.width;
 
-            if (head.x == width - 1) possibleMoves.remove("right");
             if (head.x == 0) possibleMoves.remove("left");
-            if (head.y == height - 1) possibleMoves.remove("up");
+            if (head.x == (board.width - 1)) possibleMoves.remove("right");
             if (head.y == 0) possibleMoves.remove("down");
-
-            return possibleMoves;
+            if (head.y == (board.height - 1)) possibleMoves.remove("up");
         }
     }
 }
