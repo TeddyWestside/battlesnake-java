@@ -53,7 +53,7 @@ public class SnakeTest {
         JsonNode response = OBJECT_MAPPER.readTree("{\"game\":{\"id\":\"38d13cc4-eed4-4691-9784-1df38834658f\",\"ruleset\":{\"name\":\"solo\",\"version\":\"v1.0.25\",\"settings\":{\"foodSpawnChance\":0,\"minimumFood\":0,\"hazardDamagePerTurn\":0,\"royale\":{\"shrinkEveryNTurns\":0},\"squad\":{\"allowBodyCollisions\":false,\"sharedElimination\":false,\"sharedHealth\":false,\"sharedLength\":false}}},\"timeout\":500,\"source\":\"challenge\"},\"turn\":2,\"board\":{\"height\":5,\"width\":5,\"snakes\":[{\"id\":\"gs_YWXGS3SJVKgM3wbjDXGPChSX\",\"name\":\"TeddysJavasnake\",\"latency\":\"17\",\"health\":98,\"body\":[{\"x\":2,\"y\":4},{\"x\":2,\"y\":3},{\"x\":2,\"y\":2}],\"head\":{\"x\":2,\"y\":4},\"length\":3,\"shout\":\"\",\"squad\":\"\",\"customizations\":{\"color\":\"#b00b69\",\"head\":\"default\",\"tail\":\"default\"}}],\"food\":[],\"hazards\":[]},\"you\":{\"id\":\"gs_YWXGS3SJVKgM3wbjDXGPChSX\",\"name\":\"TeddysJavasnake\",\"latency\":\"17\",\"health\":98,\"body\":[{\"x\":2,\"y\":4},{\"x\":2,\"y\":3},{\"x\":2,\"y\":2}],\"head\":{\"x\":2,\"y\":4},\"length\":3,\"shout\":\"\",\"squad\":\"\",\"customizations\":{\"color\":\"#b00b69\",\"head\":\"default\",\"tail\":\"default\"}}}");
 
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         GameState gameState = mapper.readValue(response.toString(), GameState.class);
         assertEquals(gameState.game.id, "38d13cc4-eed4-4691-9784-1df38834658f");

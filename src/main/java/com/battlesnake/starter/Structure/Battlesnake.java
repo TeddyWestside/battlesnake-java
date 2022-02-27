@@ -9,5 +9,6 @@ public class Battlesnake {
     public long length;
     public String latency;
     public String shout;
+    public String squad;
     public Customization customizations;
 }

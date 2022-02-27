@@ -100,7 +100,7 @@ public class Snake {
             GameState gameState;
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//                mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
                 gameState = mapper.readValue(moveRequest.toString(), GameState.class);
             } catch (JsonProcessingException e) {
