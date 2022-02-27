@@ -5,7 +5,6 @@ import com.battlesnake.starter.Structure.Board;
 import com.battlesnake.starter.Structure.Coord;
 import com.battlesnake.starter.Structure.GameState;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -84,7 +83,7 @@ public class Snake {
 
         /**
          * This method is called everytime your Battlesnake is entered into a game.
-         *
+         * <p>
          * Use this method to decide how your Battlesnake is going to look on the board.
          *
          * @param startRequest a JSON data map containing the information about the game
@@ -122,7 +121,7 @@ public class Snake {
             // TODO Using information from 'moveRequest', don't let your Battlesnake pick a
             // move
             // that would hit its own body
-//            this.avoidColisionWithSelf(gameState.you.head, gameState.you.body, gameState.board, possibleMoves);
+            avoidColisionWithSelf(gameState.you, gameState.board, possibleMoves);
 
             // TODO: Using information from 'moveRequest', don't let your Battlesnake pick a
             // move
@@ -143,8 +142,23 @@ public class Snake {
             return response;
         }
 
-        private void avoidColisionWithSelf(JsonNode head, JsonNode body, JsonNode board, ArrayList<String> possibleMoves) {
-            ArrayList bodies = new ObjectMapper().convertValue(body, ArrayList.class);
+        private void avoidColisionWithSelf(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
+            for (int i = 0; i < board.snakes.length; i++) {
+                if (checkCoordFree(you.head.x + 1, you.head.y, board.snakes)) possibleMoves.remove("right");
+                if (checkCoordFree(you.head.x - 1, you.head.y, board.snakes)) possibleMoves.remove("left");
+                if (checkCoordFree(you.head.x, you.head.y + 1, board.snakes)) possibleMoves.remove("up");
+                if (checkCoordFree(you.head.x, you.head.y - 1, board.snakes)) possibleMoves.remove("down");
+            }
+        }
+
+        private boolean checkCoordFree(int x, int y, Battlesnake[] snakes) {
+            Coord coord = new Coord(x, y);
+            for (Battlesnake snake : snakes) {
+                ArrayList<Coord> snakeBody = (ArrayList<Coord>) Arrays.asList(snake.body);
+                Optional<Coord> result = snakeBody.stream().findAny().filter(bodyCoord -> bodyCoord == coord);
+                if (result.isPresent()) return false;
+            }
+            return true;
         }
 
         public void avoidMyNeck(Coord head, Coord[] body, ArrayList<String> possibleMoves) {
@@ -161,7 +175,7 @@ public class Snake {
             return EMPTY;
         }
 
-        public void avoidColisionWithBorders(Battlesnake you, Board board, ArrayList<String> possibleMoves){
+        public void avoidColisionWithBorders(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
             Coord head = you.head;
 
             if (head.x == 0) possibleMoves.remove("left");
