@@ -145,9 +145,9 @@ public class Snake {
         private void avoidColisionWithSelf(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
             LOG.info("avoidColisionWithSelf you: {}", you.head.x);
             LOG.info("avoidColisionWithSelf board: {}", board.snakes[0].head.x);
-            if ((!checkCoordFree(you.head.x + 1, you.head.y, board.snakes)) && possibleMoves.contains("down")) possibleMoves.remove("right");
-            if ((!checkCoordFree(you.head.x - 1, you.head.y, board.snakes)) && possibleMoves.contains("down")) possibleMoves.remove("left");
-            if ((!checkCoordFree(you.head.x, you.head.y + 1, board.snakes)) && possibleMoves.contains("down")) possibleMoves.remove("up");
+            if ((!checkCoordFree(you.head.x + 1, you.head.y, board.snakes)) && possibleMoves.contains("right")) possibleMoves.remove("right");
+            if ((!checkCoordFree(you.head.x - 1, you.head.y, board.snakes)) && possibleMoves.contains("left")) possibleMoves.remove("left");
+            if ((!checkCoordFree(you.head.x, you.head.y + 1, board.snakes)) && possibleMoves.contains("up")) possibleMoves.remove("up");
             if ((!checkCoordFree(you.head.x, you.head.y - 1, board.snakes)) && possibleMoves.contains("down")) possibleMoves.remove("down");
 
         }
