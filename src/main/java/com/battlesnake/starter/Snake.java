@@ -7,6 +7,7 @@ import com.battlesnake.starter.Structure.GameState;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -97,15 +98,14 @@ public class Snake {
 
         public Map<String, String> move(JsonNode moveRequest) throws JsonProcessingException {
 
-
-            GameState gameState = new GameState();
+            GameState gameState;
             try {
-                LOG.info("Data: {}", moveRequest.asText());
                 ObjectMapper mapper = new ObjectMapper();
+                mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-                gameState = mapper.readValue(moveRequest.asText(), GameState.class);
+                gameState = mapper.readValue(moveRequest.toString(), GameState.class);
             } catch (JsonProcessingException e) {
-                LOG.info("Data: {}", moveRequest.asText());
+                LOG.info("Data: {}", moveRequest.toString());
                 throw e;
             }
 
