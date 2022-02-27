@@ -117,12 +117,12 @@ public class Snake {
             // don't
             // let your Battlesnake move beyond them board_height = ? board_width = ?
             avoidColisionWithBorders(gameState.you, gameState.board, possibleMoves);
-
+            LOG.info("possiblemoves: {}", possibleMoves);
             // TODO Using information from 'moveRequest', don't let your Battlesnake pick a
             // move
             // that would hit its own body
             avoidColisionWithSelf(gameState.you, gameState.board, possibleMoves);
-            LOG.info("possiblemoves: {}", possibleMoves);
+
 
             // TODO: Using information from 'moveRequest', don't let your Battlesnake pick a
             // move
