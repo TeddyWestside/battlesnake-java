@@ -122,6 +122,7 @@ public class Snake {
             // move
             // that would hit its own body
             avoidColisionWithSelf(gameState.you, gameState.board, possibleMoves);
+            LOG.info("possiblemoves: {}", possibleMoves);
 
             // TODO: Using information from 'moveRequest', don't let your Battlesnake pick a
             // move
