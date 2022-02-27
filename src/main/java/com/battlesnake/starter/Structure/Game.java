@@ -4,4 +4,5 @@ public class Game {
     public String id;
     public Ruleset ruleset;
     public long timeout;
+    public String source;
 }

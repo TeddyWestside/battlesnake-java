@@ -102,7 +102,6 @@ public class Snake {
             try {
                 LOG.info("Data: {}", moveRequest.asText());
                 ObjectMapper mapper = new ObjectMapper();
-                mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
                 mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
                 gameState = mapper.readValue(moveRequest.asText(), GameState.class);
             } catch (JsonProcessingException e) {
