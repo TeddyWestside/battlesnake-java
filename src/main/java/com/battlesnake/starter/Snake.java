@@ -155,8 +155,7 @@ public class Snake {
             Coord coord = new Coord(x, y);
             for (Battlesnake snake : snakes) {
                 List<Coord> snakeBody = Arrays.asList(snake.body);
-                Optional<Coord> result = snakeBody.stream().findAny().filter(bodyCoord -> bodyCoord == coord);
-                if (result.isPresent()) return false;
+                if (snakeBody.contains(coord)) return false;
             }
             return true;
         }
