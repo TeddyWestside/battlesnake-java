@@ -154,7 +154,7 @@ public class Snake {
         private boolean checkCoordFree(int x, int y, Battlesnake[] snakes) {
             Coord coord = new Coord(x, y);
             for (Battlesnake snake : snakes) {
-                ArrayList<Coord> snakeBody = (ArrayList<Coord>) Arrays.asList(snake.body);
+                List<Coord> snakeBody = Arrays.asList(snake.body);
                 Optional<Coord> result = snakeBody.stream().findAny().filter(bodyCoord -> bodyCoord == coord);
                 if (result.isPresent()) return false;
             }
