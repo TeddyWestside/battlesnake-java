@@ -153,11 +153,15 @@ public class Snake {
 
         private boolean checkCoordFree(int x, int y, Battlesnake[] snakes) {
             Coord coord = new Coord(x, y);
+            boolean returnValue = true;
             for (Battlesnake snake : snakes) {
                 List<Coord> snakeBody = Arrays.asList(snake.body);
-                if (snakeBody.contains(coord)) return false;
+                if (snakeBody.contains(coord)) {
+                    returnValue = false;
+                    break;
+                }
             }
-            return true;
+            return returnValue;
         }
 
         public void avoidMyNeck(Coord head, Coord[] body, ArrayList<String> possibleMoves) {
