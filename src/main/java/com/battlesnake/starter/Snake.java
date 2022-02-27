@@ -143,8 +143,8 @@ public class Snake {
         }
 
         private void avoidColisionWithSelf(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
-            LOG.info("avoidColisionWithSelf you: {}", you.toString());
-            LOG.info("avoidColisionWithSelf board: {}", board.toString());
+            LOG.info("avoidColisionWithSelf you: {}", you.head.x);
+            LOG.info("avoidColisionWithSelf board: {}", board.snakes[0].head.x);
             for (int i = 0; i < board.snakes.length; i++) {
                 if (checkCoordFree(you.head.x + 1, you.head.y, board.snakes)) possibleMoves.remove("right");
                 if (checkCoordFree(you.head.x - 1, you.head.y, board.snakes)) possibleMoves.remove("left");
