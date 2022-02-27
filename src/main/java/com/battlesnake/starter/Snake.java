@@ -147,9 +147,9 @@ public class Snake {
             LOG.info("avoidColisionWithSelf board: {}", board.snakes[0].head.x);
             for (int i = 0; i < board.snakes.length; i++) {
                 if (checkCoordFree(you.head.x + 1, you.head.y, board.snakes)) possibleMoves.remove("right");
-                if (checkCoordFree(you.head.x - 1, you.head.y, board.snakes)) possibleMoves.remove("left");
-                if (checkCoordFree(you.head.x, you.head.y + 1, board.snakes)) possibleMoves.remove("up");
-                if (checkCoordFree(you.head.x, you.head.y - 1, board.snakes)) possibleMoves.remove("down");
+//                if (checkCoordFree(you.head.x - 1, you.head.y, board.snakes)) possibleMoves.remove("left");
+//                if (checkCoordFree(you.head.x, you.head.y + 1, board.snakes)) possibleMoves.remove("up");
+//                if (checkCoordFree(you.head.x, you.head.y - 1, board.snakes)) possibleMoves.remove("down");
             }
         }
 
