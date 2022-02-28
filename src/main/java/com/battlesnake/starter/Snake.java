@@ -49,16 +49,21 @@ public class Snake {
                 String uri = req.uri();
                 LOG.info("{} called with: {}", uri, req.body());
                 Map<String, String> snakeResponse;
-                if (uri.equals("/")) {
-                    snakeResponse = index();
-                } else if (uri.equals("/start")) {
-                    snakeResponse = start(parsedRequest);
-                } else if (uri.equals("/move")) {
-                    snakeResponse = move(parsedRequest);
-                } else if (uri.equals("/end")) {
-                    snakeResponse = end(parsedRequest);
-                } else {
-                    throw new IllegalAccessError("Strange call made to the snake: " + uri);
+                switch (uri) {
+                    case "/":
+                        snakeResponse = index();
+                        break;
+                    case "/start":
+                        snakeResponse = start(parsedRequest);
+                        break;
+                    case "/move":
+                        snakeResponse = move(parsedRequest);
+                        break;
+                    case "/end":
+                        snakeResponse = end(parsedRequest);
+                        break;
+                    default:
+                        throw new IllegalAccessError("Strange call made to the snake: " + uri);
                 }
 
                 return snakeResponse;
