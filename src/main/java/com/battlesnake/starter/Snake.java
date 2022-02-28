@@ -6,7 +6,6 @@ import com.battlesnake.starter.Structure.Coord;
 import com.battlesnake.starter.Structure.GameState;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -122,7 +121,7 @@ public class Snake {
             // TODO Using information from 'moveRequest', don't let your Battlesnake pick a
             // move
             // that would hit its own body
-            avoidColisionWithSelf(gameState.you, gameState.board, possibleMoves);
+            avoidColisionWithSnake(gameState.you, gameState.board, possibleMoves);
             LOG.info("after Self possiblemoves: {}", possibleMoves);
 
 
@@ -145,7 +144,7 @@ public class Snake {
             return response;
         }
 
-        public void avoidColisionWithSelf(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
+        public void avoidColisionWithSnake(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
             if (!checkCoordFree(you.head.x + 1, you.head.y, board.snakes)) possibleMoves.remove("right");
             if (!checkCoordFree(you.head.x - 1, you.head.y, board.snakes)) possibleMoves.remove("left");
             if (!checkCoordFree(you.head.x, you.head.y + 1, board.snakes)) possibleMoves.remove("up");
@@ -153,14 +152,10 @@ public class Snake {
         }
 
         private boolean checkCoordFree(int x, int y, Battlesnake[] snakes) {
-            Coord coord = new Coord(x, y);
             boolean returnValue = true;
             for (Battlesnake snake : snakes) {
                 List<Coord> snakeBody = Arrays.asList(snake.body);
-                if (snakeBody.contains(coord)) {
-                    returnValue = false;
-                    break;
-                }
+                if (snakeBody.stream().anyMatch(o -> o.x == x && o.y == y)) returnValue = false;
             }
             return returnValue;
         }

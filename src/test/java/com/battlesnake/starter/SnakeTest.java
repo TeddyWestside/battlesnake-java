@@ -187,7 +187,7 @@ public class SnakeTest {
     }
 
     @Test
-    void dontMoveDownWhenCollision() throws JsonProcessingException {
+    void dontMoveDownWhenCollisionWithSnake() throws JsonProcessingException {
         // given
         JsonNode response = OBJECT_MAPPER.readTree("{\"game\":{\"id\":\"0462f820-bf27-468b-b076-c85d0139c6e2\",\"ruleset\":{\"name\":\"solo\",\"version\":\"v1.0.25\",\"settings\":{\"foodSpawnChance\":0,\"minimumFood\":0,\"hazardDamagePerTurn\":0,\"royale\":{\"shrinkEveryNTurns\":0},\"squad\":{\"allowBodyCollisions\":false,\"sharedElimination\":false,\"sharedHealth\":false,\"sharedLength\":false}}},\"timeout\":500,\"source\":\"challenge\"},\"turn\":33,\"board\":{\"height\":11,\"width\":11,\"snakes\":[{\"id\":\"gs_7GtkCPSvwC7GmpGBFjCrRHSJ\",\"name\":\"TeddysJavasnake\",\"latency\":\"19\",\"health\":67,\"body\":[{\"x\":2,\"y\":7},{\"x\":1,\"y\":7},{\"x\":1,\"y\":6},{\"x\":2,\"y\":6},{\"x\":3,\"y\":6}],\"head\":{\"x\":2,\"y\":7},\"length\":5,\"shout\":\"\",\"squad\":\"\",\"customizations\":{\"color\":\"#b00b69\",\"head\":\"default\",\"tail\":\"default\"}}],\"food\":[],\"hazards\":[]},\"you\":{\"id\":\"gs_7GtkCPSvwC7GmpGBFjCrRHSJ\",\"name\":\"TeddysJavasnake\",\"latency\":\"19\",\"health\":67,\"body\":[{\"x\":2,\"y\":7},{\"x\":1,\"y\":7},{\"x\":1,\"y\":6},{\"x\":2,\"y\":6},{\"x\":3,\"y\":6}],\"head\":{\"x\":2,\"y\":7},\"length\":5,\"shout\":\"\",\"squad\":\"\",\"customizations\":{\"color\":\"#b00b69\",\"head\":\"default\",\"tail\":\"default\"}}}");
         ObjectMapper mapper = new ObjectMapper();
@@ -196,10 +196,10 @@ public class SnakeTest {
 
 
         ArrayList<String> possibleMoves = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-        ArrayList<String> expectedResult = new ArrayList<>(Arrays.asList("up", "left", "right"));
+        ArrayList<String> expectedResult = new ArrayList<>(Arrays.asList("up", "right"));
 
         //act
-        handler.avoidColisionWithBorders(gameState.you, gameState.board, possibleMoves);
+        handler.avoidColisionWithSnake(gameState.you, gameState.board, possibleMoves);
 
         //assert
         assertEquals(expectedResult, possibleMoves);
