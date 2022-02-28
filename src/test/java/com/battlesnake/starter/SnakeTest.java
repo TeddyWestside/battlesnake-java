@@ -35,8 +35,8 @@ public class SnakeTest {
     void indexTest() throws IOException {
 
         Map<String, String> response = handler.index();
-        assertEquals("#B00B69", response.get("color"));
-        assertEquals("default", response.get("head"));
+        assertEquals("#314152", response.get("color"));
+        assertEquals("bendr", response.get("head"));
         assertEquals("default", response.get("tail"));
     }
 

@@ -61,8 +61,6 @@ public class Snake {
                     throw new IllegalAccessError("Strange call made to the snake: " + uri);
                 }
 
-//                LOG.info("Responding with: {}", JSON_MAPPER.writeValueAsString(snakeResponse));
-
                 return snakeResponse;
             } catch (JsonProcessingException e) {
                 LOG.warn("Something went wrong!", e);
@@ -99,7 +97,6 @@ public class Snake {
             GameState gameState;
             try {
                 ObjectMapper mapper = new ObjectMapper();
-//                mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
                 gameState = mapper.readValue(moveRequest.toString(), GameState.class);
             } catch (JsonProcessingException e) {
@@ -109,25 +106,12 @@ public class Snake {
 
             ArrayList<String> possibleMoves = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
 
-            // Don't allow your Battlesnake to move back in on it's own neck
+            // Avoid Obstacles
             avoidMyNeck(gameState.you.head, gameState.you.body, possibleMoves);
-            LOG.info("after Neck possiblemoves: {}", possibleMoves);
-
-            // TODO: Using information from 'moveRequest', find the edges of the board and
-            // don't
-            // let your Battlesnake move beyond them board_height = ? board_width = ?
             avoidColisionWithBorders(gameState.you, gameState.board, possibleMoves);
-            LOG.info("after Borders possiblemoves: {}", possibleMoves);
-            // TODO Using information from 'moveRequest', don't let your Battlesnake pick a
-            // move
-            // that would hit its own body
             avoidColisionWithSnake(gameState.you, gameState.board, possibleMoves);
             LOG.info("after Self possiblemoves: {}", possibleMoves);
 
-
-            // TODO: Using information from 'moveRequest', don't let your Battlesnake pick a
-            // move
-            // that would collide with another Battlesnake
 
             // TODO: Using information from 'moveRequest', make your Battlesnake move
             // towards a
@@ -145,17 +129,17 @@ public class Snake {
         }
 
         public void avoidColisionWithSnake(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
-            if (!checkCoordFree(you.head.x + 1, you.head.y, board.snakes)) possibleMoves.remove("right");
-            if (!checkCoordFree(you.head.x - 1, you.head.y, board.snakes)) possibleMoves.remove("left");
-            if (!checkCoordFree(you.head.x, you.head.y + 1, board.snakes)) possibleMoves.remove("up");
-            if (!checkCoordFree(you.head.x, you.head.y - 1, board.snakes)) possibleMoves.remove("down");
+            if (checkCoordInUse(you.head.x + 1, you.head.y, board.snakes)) possibleMoves.remove("right");
+            if (checkCoordInUse(you.head.x - 1, you.head.y, board.snakes)) possibleMoves.remove("left");
+            if (checkCoordInUse(you.head.x, you.head.y + 1, board.snakes)) possibleMoves.remove("up");
+            if (checkCoordInUse(you.head.x, you.head.y - 1, board.snakes)) possibleMoves.remove("down");
         }
 
-        private boolean checkCoordFree(int x, int y, Battlesnake[] snakes) {
-            boolean returnValue = true;
+        private boolean checkCoordInUse(int x, int y, Battlesnake[] snakes) {
+            boolean returnValue = false;
             for (Battlesnake snake : snakes) {
                 List<Coord> snakeBody = Arrays.asList(snake.body);
-                if (snakeBody.stream().anyMatch(o -> o.x == x && o.y == y)) returnValue = false;
+                if (snakeBody.stream().anyMatch(o -> o.x == x && o.y == y)) returnValue = true;
             }
             return returnValue;
         }
