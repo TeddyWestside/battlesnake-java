@@ -112,6 +112,7 @@ public class Snake {
 
             // Don't allow your Battlesnake to move back in on it's own neck
             avoidMyNeck(gameState.you.head, gameState.you.body, possibleMoves);
+            LOG.info("after Neck possiblemoves: {}", possibleMoves);
 
             // TODO: Using information from 'moveRequest', find the edges of the board and
             // don't
@@ -144,7 +145,7 @@ public class Snake {
             return response;
         }
 
-        private void avoidColisionWithSelf(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
+        public void avoidColisionWithSelf(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
             if (!checkCoordFree(you.head.x + 1, you.head.y, board.snakes)) possibleMoves.remove("right");
             if (!checkCoordFree(you.head.x - 1, you.head.y, board.snakes)) possibleMoves.remove("left");
             if (!checkCoordFree(you.head.x, you.head.y + 1, board.snakes)) possibleMoves.remove("up");
