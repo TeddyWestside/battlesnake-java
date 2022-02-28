@@ -73,25 +73,25 @@ public class SnakeTest {
         assertEquals(0, response.size());
     }
 
-//    @Test
-//    void avoidNeckAllTest() throws IOException {
-//
-//        JsonNode testHead = OBJECT_MAPPER.readTree("{\"x\": 5, \"y\": 5}");
-//        JsonNode testBody = OBJECT_MAPPER
-//                .readTree("[{\"x\": 5, \"y\": 5}, {\"x\": 5, \"y\": 5}, {\"x\": 5, \"y\": 5}]");
-//        ObjectMapper headMapper = new ObjectMapper();
-//        Coord head = headMapper.readValue(testHead.asText(), Coord.class);
-//        ObjectMapper bodyMapper = new ObjectMapper();
-//        Coord[] body = bodyMapper.readValue(testBody.asText(), Coord[].class);
-//
-//        ArrayList<String> possibleMoves = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-//        ArrayList<String> expectedResult = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
-//
-//        handler.avoidMyNeck(head, body, possibleMoves);
-//
-//        assertEquals(4, possibleMoves.size());
-//        assertEquals(possibleMoves, expectedResult);
-//    }
+    @Test
+    void avoidNeckAllTest() throws IOException {
+
+        JsonNode testHead = OBJECT_MAPPER.readTree("{\"x\": 5, \"y\": 5}");
+        JsonNode testBody = OBJECT_MAPPER
+                .readTree("[{\"x\": 5, \"y\": 5}, {\"x\": 5, \"y\": 5}, {\"x\": 5, \"y\": 5}]");
+        ObjectMapper headMapper = new ObjectMapper();
+        Coord head = headMapper.readValue(testHead.toString(), Coord.class);
+        ObjectMapper bodyMapper = new ObjectMapper();
+        Coord[] body = bodyMapper.readValue(testBody.toString(), Coord[].class);
+
+        ArrayList<String> possibleMoves = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
+        ArrayList<String> expectedResult = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
+
+        handler.avoidMyNeck(head, body, possibleMoves);
+
+        assertEquals(4, possibleMoves.size());
+        assertEquals(possibleMoves, expectedResult);
+    }
 
     @Test
     void avoidNeckLeftTest() throws IOException {
