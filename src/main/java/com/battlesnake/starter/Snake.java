@@ -42,6 +42,7 @@ public class Snake {
     public static class Handler {
 
         private static final Map<String, String> EMPTY = new HashMap<>();
+        String lastMove;
 
         public Map<String, String> process(Request req, Response res) {
             try {
@@ -122,16 +123,37 @@ public class Snake {
             // towards a
             // piece of food on the board
 
-            // Choose a random direction to move in
-            final int choice = new Random().nextInt(possibleMoves.size());
-            final String move = possibleMoves.get(choice);
+//            findFood(gameState.you.head, gameState.board, possibleMoves);
+
+            String move;
+
+            if (lastMove != null && possibleMoves.contains(lastMove)) {
+                move = lastMove;
+            } else {
+                // Choose a random direction to move in
+                final int choice = new Random().nextInt(possibleMoves.size());
+                move = possibleMoves.get(choice);
+            }
 
             LOG.info("MOVE {}", move);
 
+            lastMove = move;
             Map<String, String> response = new HashMap<>();
             response.put("move", move);
             return response;
         }
+
+//        public void findFood(Coord head, Board board, ArrayList<String> possibleMoves) {
+//            Coord nerestFood = getNearestFood(head, board);
+//        }
+
+//        private Coord getNearestFood(Coord head, Board board) {
+//            Coord nearestFood;
+//
+//
+//
+//            return
+//        }
 
         public void avoidCollisionWithSnake(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
             if (checkCoordInUse(you.head.x + 1, you.head.y, board.snakes)) possibleMoves.remove("right");
