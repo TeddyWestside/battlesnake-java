@@ -113,8 +113,8 @@ public class Snake {
 
             // Avoid Obstacles
             avoidMyNeck(gameState.you.head, gameState.you.body, possibleMoves);
-            avoidColisionWithBorders(gameState.you, gameState.board, possibleMoves);
-            avoidColisionWithSnake(gameState.you, gameState.board, possibleMoves);
+            avoidCollisionWithBorders(gameState.you, gameState.board, possibleMoves);
+            avoidCollisionWithSnake(gameState.you, gameState.board, possibleMoves);
             LOG.info("after Self possiblemoves: {}", possibleMoves);
 
 
@@ -133,7 +133,7 @@ public class Snake {
             return response;
         }
 
-        public void avoidColisionWithSnake(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
+        public void avoidCollisionWithSnake(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
             if (checkCoordInUse(you.head.x + 1, you.head.y, board.snakes)) possibleMoves.remove("right");
             if (checkCoordInUse(you.head.x - 1, you.head.y, board.snakes)) possibleMoves.remove("left");
             if (checkCoordInUse(you.head.x, you.head.y + 1, board.snakes)) possibleMoves.remove("up");
@@ -163,7 +163,7 @@ public class Snake {
             return EMPTY;
         }
 
-        public void avoidColisionWithBorders(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
+        public void avoidCollisionWithBorders(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
             Coord head = you.head;
 
             if (head.x == 0) possibleMoves.remove("left");

@@ -199,7 +199,7 @@ public class SnakeTest {
         ArrayList<String> expectedResult = new ArrayList<>(Arrays.asList("up", "right"));
 
         //act
-        handler.avoidColisionWithSnake(gameState.you, gameState.board, possibleMoves);
+        handler.avoidCollisionWithSnake(gameState.you, gameState.board, possibleMoves);
 
         //assert
         assertEquals(expectedResult, possibleMoves);
