@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static spark.Spark.*;
@@ -116,24 +117,25 @@ public class Snake {
             avoidMyNeck(gameState.you.head, gameState.you.body, possibleMoves);
             avoidCollisionWithBorders(gameState.you, gameState.board, possibleMoves);
             avoidCollisionWithSnake(gameState.you, gameState.board, possibleMoves);
-            LOG.info("after Self possiblemoves: {}", possibleMoves);
+            LOG.info("after Collision possiblemoves: {}", possibleMoves);
 
 
             // TODO: Using information from 'moveRequest', make your Battlesnake move
             // towards a
             // piece of food on the board
 
-//            findFood(gameState.you.head, gameState.board, possibleMoves);
+            findFood(gameState.you.head, gameState.board, possibleMoves);
+            LOG.info("after findFood possiblemoves: {}", possibleMoves);
 
             String move;
 
-            if (lastMove != null && possibleMoves.contains(lastMove)) {
-                move = lastMove;
-            } else {
+//            if (lastMove != null && possibleMoves.contains(lastMove)) {
+//                move = lastMove;
+//            } else {
                 // Choose a random direction to move in
                 final int choice = new Random().nextInt(possibleMoves.size());
                 move = possibleMoves.get(choice);
-            }
+//            }
 
             LOG.info("MOVE {}", move);
 
@@ -143,17 +145,41 @@ public class Snake {
             return response;
         }
 
-//        public void findFood(Coord head, Board board, ArrayList<String> possibleMoves) {
-//            Coord nerestFood = getNearestFood(head, board);
-//        }
+        public void findFood(Coord head, Board board, ArrayList<String> possibleMoves) {
+            Coord nearestFood = getNearestFood(head, board);
+            String step = calculateStepTowardsFood(head, nearestFood);
+            if (step != null && possibleMoves.contains(step)) {
+                possibleMoves.clear();
+                possibleMoves.add(step);
+            }
+        }
 
-//        private Coord getNearestFood(Coord head, Board board) {
-//            Coord nearestFood;
-//
-//
-//
-//            return
-//        }
+        private String calculateStepTowardsFood(Coord head, Coord nearestFood) {
+            int xDifference = head.x - nearestFood.x;
+            int yDifference = head.y - nearestFood.y;
+
+            if (xDifference > yDifference && xDifference < 0) return "right";
+            if (xDifference > yDifference && xDifference > 0) return "left";
+            if (xDifference < yDifference && yDifference < 0) return "up";
+            if (xDifference < yDifference && xDifference > 0) return "down";
+            return null;
+        }
+
+        private Coord getNearestFood(Coord head, Board board) {
+            ArrayList<Double> euclideanDistanceArray = new ArrayList<>();
+            for (int i = 0; i < board.food.length; i++) {
+                euclideanDistanceArray.add(Math.sqrt(Math.pow(board.food[i].x - head.x, 2) + Math.pow(board.food[i].y - head.y, 2)));
+            }
+            double minEuclideanDistance = Double.MAX_EXPONENT;
+            for (int i = 1; i < euclideanDistanceArray.size(); i++) {
+                if (euclideanDistanceArray.get(i) < minEuclideanDistance) {
+                    minEuclideanDistance = euclideanDistanceArray.get(i);
+                }
+            }
+            int indexOfMin = euclideanDistanceArray.indexOf(minEuclideanDistance);
+
+            return board.food[indexOfMin];
+        }
 
         public void avoidCollisionWithSnake(Battlesnake you, Board board, ArrayList<String> possibleMoves) {
             if (checkCoordInUse(you.head.x + 1, you.head.y, board.snakes)) possibleMoves.remove("right");
