@@ -181,7 +181,8 @@ public class Snake {
             }
             LOG.info("minEuclideanDistance filled");
             int indexOfMin = euclideanDistanceArray.indexOf(minEuclideanDistance);
-
+            LOG.info("indexOfMin filled {}", indexOfMin);
+            LOG.info("board.food[indexOfMin] is {}", board.food[indexOfMin]);
             return board.food[indexOfMin];
         }
 
