@@ -168,6 +168,7 @@ public class Snake {
 
         private Coord getNearestFood(Coord head, Board board) {
             ArrayList<Double> euclideanDistanceArray = new ArrayList<>();
+            LOG.info("getNearestFood");
             for (int i = 0; i < board.food.length; i++) {
                 euclideanDistanceArray.add(Math.sqrt(Math.pow(board.food[i].x - head.x, 2) + Math.pow(board.food[i].y - head.y, 2)));
             }
