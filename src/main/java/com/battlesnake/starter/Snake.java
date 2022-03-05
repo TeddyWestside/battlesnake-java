@@ -173,10 +173,10 @@ public class Snake {
                 euclideanDistanceArray.add(Math.sqrt(Math.pow(board.food[i].x - head.x, 2) + Math.pow(board.food[i].y - head.y, 2)));
             }
             double minEuclideanDistance = Double.MAX_EXPONENT;
-            LOG.info("euclideanDistanceArray filled");
-            for (int i = 1; i < euclideanDistanceArray.size(); i++) {
-                if (euclideanDistanceArray.get(i) < minEuclideanDistance) {
-                    minEuclideanDistance = euclideanDistanceArray.get(i);
+            LOG.info("euclideanDistanceArray filled {}", euclideanDistanceArray);
+            for (int k = 1; k < euclideanDistanceArray.size(); k++) {
+                if (euclideanDistanceArray.get(k) < minEuclideanDistance) {
+                    minEuclideanDistance = euclideanDistanceArray.get(k);
                 }
             }
             LOG.info("minEuclideanDistance filled");
