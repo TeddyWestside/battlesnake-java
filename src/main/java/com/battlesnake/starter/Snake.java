@@ -148,6 +148,7 @@ public class Snake {
         public void findFood(Coord head, Board board, ArrayList<String> possibleMoves) {
             if (board.food.length == 0) return; // If there is no food
             Coord nearestFood = getNearestFood(head, board);
+            LOG.info("nearest Food {}", nearestFood.x + " " + nearestFood.y);
             String step = calculateStepTowardsFood(head, nearestFood);
             LOG.info("possible STEP {}", step);
             if (step != null && possibleMoves.contains(step)) {
