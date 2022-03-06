@@ -174,9 +174,9 @@ public class Snake {
             }
             double minEuclideanDistance = Double.MAX_EXPONENT;
             LOG.info("euclideanDistanceArray filled {}", euclideanDistanceArray);
-            for (int k = 1; k < euclideanDistanceArray.size(); k++) {
-                if (euclideanDistanceArray.get(k) < minEuclideanDistance) {
-                    minEuclideanDistance = euclideanDistanceArray.get(k);
+            for (Double aDouble : euclideanDistanceArray) {
+                if (aDouble < minEuclideanDistance) {
+                    minEuclideanDistance = aDouble;
                 }
             }
             LOG.info("minEuclideanDistance filled");
