@@ -146,12 +146,13 @@ public class Snake {
         }
 
         public void findFood(Coord head, Board board, ArrayList<String> possibleMoves) {
-            if (board.food.length == 0) return;
+            if (board.food.length == 0) return; // If there is no food
             Coord nearestFood = getNearestFood(head, board);
             String step = calculateStepTowardsFood(head, nearestFood);
             if (step != null && possibleMoves.contains(step)) {
                 possibleMoves.clear();
                 possibleMoves.add(step);
+                LOG.info("NEXT STEP {}", step);
             }
         }
 
@@ -163,7 +164,7 @@ public class Snake {
             if (xDifference > yDifference && xDifference > 0) return "left";
             if (xDifference < yDifference && yDifference < 0) return "up";
             if (xDifference < yDifference && xDifference > 0) return "down";
-            return null;
+            return null; // If there is no food
         }
 
         private Coord getNearestFood(Coord head, Board board) {
@@ -179,9 +180,8 @@ public class Snake {
                     minEuclideanDistance = aDouble;
                 }
             }
-            LOG.info("minEuclideanDistance filled");
+            LOG.info("minEuclideanDistance filled {}", minEuclideanDistance);
             int indexOfMin = euclideanDistanceArray.indexOf(minEuclideanDistance);
-            LOG.info("indexOfMin filled {}", indexOfMin);
             LOG.info("board.food[indexOfMin] is {}", board.food[indexOfMin]);
             return board.food[indexOfMin];
         }
