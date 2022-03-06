@@ -149,10 +149,11 @@ public class Snake {
             if (board.food.length == 0) return; // If there is no food
             Coord nearestFood = getNearestFood(head, board);
             String step = calculateStepTowardsFood(head, nearestFood);
+            LOG.info("possible STEP {}", step);
             if (step != null && possibleMoves.contains(step)) {
                 possibleMoves.clear();
                 possibleMoves.add(step);
-                LOG.info("NEXT STEP {}", step);
+//                LOG.info("NEXT STEP {}", step);
             }
         }
 
