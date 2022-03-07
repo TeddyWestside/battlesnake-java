@@ -165,8 +165,8 @@ public class Snake {
             LOG.info("xDifference {} yDifference {}", xDifference, yDifference);
             boolean moveInXDirection = Math.abs(xDifference) < Math.abs(yDifference);
             LOG.info("moveInXDirection {}", moveInXDirection);
-            if (moveInXDirection && (xDifference < 0)) return "right";
-            if (moveInXDirection && (xDifference > 0)) return "left";
+            if (moveInXDirection && (xDifference > 0)) return "right";
+            if (moveInXDirection && (xDifference < 0)) return "left";
             if (!moveInXDirection && (yDifference < 0)) return "up";
             if (!moveInXDirection && (yDifference > 0)) return "down";
             return null; // If there is no food
