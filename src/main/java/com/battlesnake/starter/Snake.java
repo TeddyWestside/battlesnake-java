@@ -162,12 +162,11 @@ public class Snake {
             int xDifference = head.x - nearestFood.x;
             int yDifference = head.y - nearestFood.y;
 
-            boolean moveInXDirection = Math.abs(xDifference) > Math.abs(yDifference);
-            boolean moveInYDirection = Math.abs(xDifference) < Math.abs(yDifference);
+            boolean moveInXDirection = Math.abs(xDifference) < Math.abs(yDifference);
             if (moveInXDirection && (xDifference < 0)) return "right";
             if (moveInXDirection && (xDifference > 0)) return "left";
-            if (moveInYDirection && (yDifference < 0)) return "up";
-            if (moveInYDirection && (xDifference > 0)) return "down";
+            if (!moveInXDirection && (yDifference < 0)) return "up";
+            if (!moveInXDirection && (xDifference > 0)) return "down";
             return null; // If there is no food
         }
 
