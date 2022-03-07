@@ -154,7 +154,7 @@ public class Snake {
             if (step != null && possibleMoves.contains(step)) {
                 possibleMoves.clear();
                 possibleMoves.add(step);
-//                LOG.info("NEXT STEP {}", step);
+                LOG.info("NEXT STEP SET {}", step);
             }
         }
 
