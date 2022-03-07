@@ -169,7 +169,7 @@ public class Snake {
             if (moveInXDirection && (xDifference > 0)) return "left";
             if (!moveInXDirection && (yDifference < 0)) return "up";
             if (!moveInXDirection && (yDifference > 0)) return "down";
-            return null; // If there is no food
+            return lastMove; // If there is no food
         }
 
         private Coord getNearestFood(Coord head, Board board) {
